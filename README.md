@@ -1,24 +1,27 @@
 # sb-file-argtype
 
-## Project setup
+
+## Project Setup
+
 ```
-npm install
+yarn install
+
+yarn storybook
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### Steps to Reproduce
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Run storybook server (`yarn storybook`)
+- Navigate to button story
+- Open browser dev console.
+- Notice 'file' control in the controls tab.
+- Uplload any accepted file.
+- In the watcher, notice, the file cannot be captured.
+- However, you can log the file as a property of args.
+
+The use case here is for a component that determines internal logic based on an uploaded file.
+The watcher can fetch and convert the localized url object into a blob but this is not currently possible with 
+the inability to watch for an uploaded file.
+

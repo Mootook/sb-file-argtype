@@ -1,4 +1,5 @@
 import MyButton from './Button.vue';
+import { watch, toRef } from 'vue'
 
 export default {
   title: 'Example/Button',
@@ -7,6 +8,13 @@ export default {
     backgroundColor: { control: 'color' },
     size: { control: { type: 'select', options: ['small', 'medium', 'large'] } },
     onClick: {},
+    file: {
+      defaultValue: [],
+      control: {
+        type: 'file',
+        accept: ['.txt', '.jpeg', '.rtf']
+      }
+    }
   },
 };
 
@@ -15,10 +23,23 @@ const Template = (args) => ({
   components: { MyButton },
   // The story's `args` need to be mapped into the template through the `setup()` method
   setup() {
+    watch(() => args.file, (newFile) => {
+      // Omitted potentially unsafe URL args
+      console.log('New File: ', newFile)
+    })
+
+    watch(toRef(args, 'file'), (newFile) => {
+      console.log('New File', newFile)
+    })
+
     return { args };
   },
   // And then the `args` are bound to your component with `v-bind="args"`
-  template: '<my-button v-bind="args" />',
+  template: `
+    <span>{{ args.file }}</span>
+    <br />
+    <my-button v-bind="args" />
+  `,
 });
 
 export const Primary = Template.bind({});
